@@ -7,11 +7,11 @@ Point3d = namedtuple('Point3d', 'x,y,z', defaults=[0, 0, 0])
 DIRECT_ADJACENTS = ((0, -1), (-1, 0), (1, 0), (0, 1))  # 4 adjacent nodes
 ALL_ADJACENTS = ((-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1))
 
-
 NORTH = Point(0, -1)
 EAST = Point(1, 0)
 SOUTH = Point(0, 1)
 WEST = Point(-1, 0)
+
 
 def translate(p: Union[Point, Point3d, tuple], offset: Union[Point, Point3d, tuple]) -> Union[Point, Point3d, tuple]:
     if type(p) == Point:
@@ -22,7 +22,7 @@ def translate(p: Union[Point, Point3d, tuple], offset: Union[Point, Point3d, tup
         assert len(p) == len(offset)
         result = []
         for i in range(len(p)):
-            result.append(p[i]+offset[i])
+            result.append(p[i] + offset[i])
         return tuple(result)
     raise ValueError(f'can not translate {type(p)}')
 
@@ -37,3 +37,21 @@ def rot_ccw(p: tuple) -> tuple:
 
 def manhattan_distance(p) -> int:
     return sum(map(abs, p))
+
+
+def all_adjacent_iter(p: tuple, width: int = 0, height: int = 0):
+    yield from _adjacent_iter(p, width, height)
+
+
+def direct_adjacent_iter(p: tuple, width: int = 0, height: int = 0):
+    yield from _adjacent_iter(p, width, height, DIRECT_ADJACENTS)
+
+
+def _adjacent_iter(p: tuple, width: int = 0, height: int = 0, adjacents=ALL_ADJACENTS):
+    for dx, dy in adjacents:
+        np = Point(p[0] + dx, p[1] + dy)
+        if width > 0 and (np.x < 0 or np.x >= width):
+            continue
+        if height > 0 and (np.y < 0 or np.y >= height):
+            continue
+        yield np
