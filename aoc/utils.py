@@ -2,13 +2,14 @@ import re
 from itertools import chain
 
 
-def extract_ints(raw: str) -> list[int]:
-    """Utility function to extract all integers from some string.
-    Many inputs can be directly parsed with this function.
+def get_ints(s: str) -> [int]:
     """
-    return list(map(int, re.findall(r"((?:-|\+)?\d+)", raw)))
+    Get all int (including sign) values from the given string
+    """
+    return list(map(int, re.findall(r"((?:-|\+)?\d+)", s)))
 
-def fetch(iterable, n, fillvalue=None):
+
+def fetch(iterable, n: int, fillvalue=None) -> [any]:
     """
     fetches n values from iterable - filled with fillvalue if needed;
     great for destructuring data with different number of arguments etc
