@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="aoc-utils", # Replace with your own username
+    name="aoc-lib", # Replace with your own username
     version="1.0.0",
     author="Seppo",
     author_email="aoc@possner.de",

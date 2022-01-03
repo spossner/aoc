@@ -1,2 +1,4 @@
 /venv/
 /.idea/
+/dist/
+/aoc_lib.egg-info/
