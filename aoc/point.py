@@ -34,9 +34,15 @@ def rot_cw(p: tuple) -> tuple:
 def rot_ccw(p: tuple) -> tuple:
     return Point(p[1], -p[0])
 
+def length(p) -> int:
+    return sum(map(abs,p))
 
-def manhattan_distance(p) -> int:
-    return sum(map(abs, p))
+def manhattan_distance(p1, p2) -> int:
+    assert len(p1) == len(p2)
+    ans = 0
+    for i in range(len(p1)):
+        ans += abs(p1[i]-p2[i])
+    return ans
 
 
 def all_adjacent_iter(p: tuple, width: int = 0, height: int = 0):
