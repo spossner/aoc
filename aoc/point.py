@@ -13,11 +13,11 @@ SOUTH = Point(0, 1)
 WEST = Point(-1, 0)
 
 
-def translate(p: Union[Point, Point3d, tuple], offset: Union[Point, Point3d, tuple]) -> Union[Point, Point3d, tuple]:
+def translate(p: Union[Point, Point3d, tuple], offset: tuple) -> Union[Point, Point3d, tuple]:
     if type(p) == Point:
-        return Point(p.x + offset.x, p.y + offset.y)
+        return Point(p.x + offset[0], p.y + offset[1])
     if type(p) == Point3d:
-        return Point3d(p.x + offset.x, p.y + offset.y, p.z + offset.z)
+        return Point3d(p.x + offset[0], p.y + offset[1], p.z + offset[2])
     if type(p) == tuple:
         assert len(p) == len(offset)
         result = []
