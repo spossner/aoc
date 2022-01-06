@@ -67,11 +67,7 @@ class Rect:
     def contains_point(self, x, y):
         return self.x <= x < self.x + self.w and self.y <= y < self.y + self.h
 
-    def points(self):
-        """
-        Generator presenting all points in the rect starting top left (x,y) and proceeding row by row (e.g. (x+1,y) as next point)
-        :return: Point in rect (generator)
-        """
+    def __iter__(self):
         for y in range(self.y, self.y + self.h):
             for x in range(self.x, self.x + self.w):
                 yield Point(x, y)
