@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="aoc-lib", # Replace with your own username
-    version="1.1.1",
+    version="1.1.2",
     author="Seppo",
     author_email="aoc@possner.de",
     description="Some helper functions for advent of code puzzles",
