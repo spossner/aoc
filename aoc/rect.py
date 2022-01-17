@@ -1,5 +1,3 @@
-from __future__ import nested_scopes
-from collections import namedtuple
 from dataclasses import dataclass
 from typing import Union
 
@@ -45,13 +43,15 @@ class Rect:
         self.h = new_height
         return self
 
-    def extend(self, x, y):
+    def extend(self, x: Union[tuple,Point,int], y=None):
         """
         Extend the rect to also contain the given point
-        :param x: the x coordinate to also include
-        :param y: the y coordinate to also include
+        :param x: the point or tuple (x,y) to include or the x coordinate
+        :param y: y coordinate if p is not tuple or point
         :return: the rect itself for further concatenation
         """
+        if type(x) != int:
+            x, y = p
         if x < self.x:
             self.w = self.w + self.x - x
             self.x = x
@@ -64,16 +64,15 @@ class Rect:
             self.h = y - self.y + 1
         return self
 
-    def contains_point(self, x, y):
-        return self.x <= x < self.x + self.w and self.y <= y < self.y + self.h
+    def __contains__(self, other):
+        if type(other) == Rect:
+            return self.x <= other.x and self.y <= other.y and self.x + self.w >= other.x + other.w and self.y + self.h >= other.y + other.h and self.x + self.w > other.x and self.y + self.h > other.y
+        return self.x <= other[0] < self.x + self.w and self.y <= other[1] < self.y + self.h
 
     def __iter__(self):
         for y in range(self.y, self.y + self.h):
             for x in range(self.x, self.x + self.w):
                 yield Point(x, y)
-
-    def contains(self, other):
-        return self.x <= other.x and self.y <= other.y and self.x + self.w >= other.x + other.w and self.y + self.h >= other.y + other.h and self.x + self.w > other.x and self.y + self.h > other.y
 
     def intersection(self, other):
         x = y = w = h = None
