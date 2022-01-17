@@ -61,3 +61,9 @@ def _adjacent_iter(p: tuple, width: int = 0, height: int = 0, adjacents=ALL_ADJA
         if height > 0 and (np.y < 0 or np.y >= height):
             continue
         yield np
+
+def point_by_row(self, other):
+    if self[1] == other[1]:
+        return self[0]-other[0]
+    else:
+        return self[1]-other[1]
