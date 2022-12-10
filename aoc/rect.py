@@ -51,7 +51,7 @@ class Rect:
         :return: the rect itself for further concatenation
         """
         if type(x) != int:
-            x, y = p
+            x, y = x
         if x < self.x:
             self.w = self.w + self.x - x
             self.x = x

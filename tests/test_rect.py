@@ -53,3 +53,23 @@ def test_rect_intersection():
     assert r_i in r_j
     assert r_j in r_i
     assert r_i == r_j
+
+def test_rect_extend():
+    r1 = Rect(5, 5, 30, 30)
+    r1.extend(Point(1,1))
+    assert Point(34,34) in r1
+    assert Point(35,35) not in r1
+    assert r1.x == 1
+    assert r1.y == 1
+    assert Point(34, 34) in r1
+    assert Point(35, 35) not in r1
+
+    r2 = Rect(5, 5, 30, 30)
+    r2.extend(2,2)
+    assert Point(34, 34) in r2
+    assert Point(35, 35) not in r2
+
+    r3 = Rect(5, 5, 30, 30)
+    r3.extend((2,2))
+    assert Point(34, 34) in r3
+    assert Point(35, 35) not in r3
