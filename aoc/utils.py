@@ -1,5 +1,5 @@
 import re
-from itertools import chain
+from itertools import chain, islice
 
 
 def get_ints(s: str) -> [int]:
@@ -23,3 +23,12 @@ def fetch(iterable, n: int, fillvalue=None) -> [any]:
         return iterable[0:n]
     fill = [fillvalue] * (n - len(iterable))
     return chain(iterable, fill)
+
+def batched(iterable, n):
+    "Batch data into lists of length n. The last batch may be shorter."
+    # batched('ABCDEFG', 3) --> ABC DEF G
+    if n < 1:
+        raise ValueError('n must be at least one')
+    it = iter(iterable)
+    while (batch := list(islice(it, n))):
+        yield batch
