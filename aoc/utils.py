@@ -30,5 +30,5 @@ def batched(iterable, n):
     if n < 1:
         raise ValueError('n must be at least one')
     it = iter(iterable)
-    while (batch := list(islice(it, n))):
+    while (batch := list(islice(it, n+1))):
         yield batch
