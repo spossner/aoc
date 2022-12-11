@@ -1,4 +1,4 @@
-from aoc import get_ints, fetch
+from aoc import get_ints, fetch, batched
 
 
 def test_fetch():
@@ -11,3 +11,7 @@ def test_fetch():
 
 def test_get_ints():
     assert get_ints("Set value to 2 and jump -34.") == [2, -34]
+
+
+def test_batched():
+    assert list(batched("ABCDEFG", 3)) == [['A','B','C'], ['D','E','F'],['G']]
