@@ -55,12 +55,12 @@ class Rect:
         if x < self.x:
             self.w = self.w + self.x - x
             self.x = x
-        elif x > self.x + self.w:
+        elif x >= self.x + self.w:
             self.w = x - self.x + 1
         if y < self.y:
             self.h = self.h + self.y - y
             self.y = y
-        elif y > self.y + self.h:
+        elif y >= self.y + self.h:
             self.h = y - self.y + 1
         return self
 

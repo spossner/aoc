@@ -18,7 +18,14 @@ def test_rect():
     assert Point(34, 34) in r1
     assert Point(35, 35) not in r1
 
-
+def test_contains():
+    r = Rect(490, 0, 74, 162)
+    p = Point(556, 124)
+    assert p in r
+    p2 = Point(544, 162)
+    assert p2 not in r
+    r.extend(p2)
+    assert p2 in r
 
 def test_extend():
     r1 = Rect(5, 5, 10, 10)
