@@ -9,7 +9,8 @@ Several Point related functions (including rotation, manhattan distance), iterat
 - Install setuptools, wheel and the twine package by running `venv/bin/python -m pip install --upgrade setuptools wheel twine` in jetbrains console
 
 ## Deploy
-1. Build the dist into /dist folder by running 
+1. Clean the dist folder if you only want the latest version uploaded
+2. Build the dist into /dist folder by running 
    `python -m build`
 2. Upload to PyPi by running 
    `python -m twine upload dist/*`
