@@ -46,6 +46,19 @@ def test_extend():
         assert p not in r1, "{p} should still not be inside {r1}"
 
 
+def test_empty_rect():
+    empty = Rect()
+    assert bool(empty) is False
+    p = Point(556, 124)
+    empty.extend(p)
+    assert p in empty
+    p2 = Point(500, 100)
+    empty.extend(p2)
+    assert p in empty
+    assert p2 in empty
+    assert Point(520,110) in empty
+
+
 def test_rect_intersection():
     r1 = Rect(5, 5, 30, 30)
     r2 = Rect(15, 15, 30, 30)
@@ -72,11 +85,22 @@ def test_rect_extend():
     assert Point(35, 35) not in r1
 
     r2 = Rect(5, 5, 30, 30)
-    r2.extend(2,2)
+    r2.extend([23,20])
+    r2.extend((2,2))
     assert Point(34, 34) in r2
     assert Point(35, 35) not in r2
 
-    r3 = Rect(5, 5, 30, 30)
-    r3.extend((2,2))
-    assert Point(34, 34) in r3
-    assert Point(35, 35) not in r3
+def test_rect_multi_extend():
+    r1 = Rect(5, 5, 30, 30)
+    r1.extend(Point(1,1), Point(40,40), Point(50,50), (60,60), [70,70,70])
+    assert Point(34, 34) in r1
+    assert Point(70, 70) in r1
+    assert Point(0, 0) not in r1
+
+
+def test_rect_extend_list_mixed():
+    r1 = Rect(5, 5, 30, 30)
+    r1.extend((Point(1,1), Point(40,40), Point(50,50), (60,60), [70,70,70]), Point(80,80), [Point(90,90)])
+    assert Point(34, 34) in r1
+    assert Point(70, 70) in r1
+    assert Point(0, 0) not in r1
