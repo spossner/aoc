@@ -13,21 +13,30 @@ NORTH_EAST = Point(1, -1)
 SOUTH_WEST = Point(-1, 1)
 SOUTH_EAST = Point(1, 1)
 
-
 DIRECT_ADJACENTS = (NORTH, EAST, SOUTH, WEST)  # 4 adjacent nodes
 ALL_ADJACENTS = (NORTH, NORTH_EAST, EAST, SOUTH_EAST, SOUTH, SOUTH_WEST, WEST, NORTH_WEST)
+ADJACENTS_3D = (
+    Point3d(1, 0, 0),  # RIGHT
+    Point3d(-1, 0, 0),  # LEFT
+    Point3d(0, -1, 0),  # ABOVE
+    Point3d(0, 1, 0),  # BELOW
+    Point3d(0, 0, -1),  # FRONT
+    Point3d(0, 0, 1),  # BEHIND
+)
 
 
-def translate(p: Union[Point, Point3d, tuple], offset: tuple) -> Union[Point, Point3d, tuple]:
-    if type(p) == Point:
-        return Point(p.x + offset[0], p.y + offset[1])
+def translate(p: Union[Point, Point3d, tuple], offset: tuple, times=1) -> Union[Point, Point3d, tuple]:
     if type(p) == Point3d:
-        return Point3d(p.x + offset[0], p.y + offset[1], p.z + offset[2])
+        return Point3d(p.x + offset[0] * times, p.y + offset[1] * times, p.z + offset[2] * times)
+
+    if type(p) == Point:
+        return Point(p.x + offset[0] * times, p.y + offset[1] * times)
+
     if type(p) == tuple:
         assert len(p) == len(offset)
         result = []
         for i in range(len(p)):
-            result.append(p[i] + offset[i])
+            result.append(p[i] + offset[i] * times)
         return tuple(result)
     raise ValueError(f'can not translate {type(p)}')
 
@@ -39,8 +48,10 @@ def rot_cw(p: tuple) -> tuple:
 def rot_ccw(p: tuple) -> tuple:
     return Point(p[1], -p[0])
 
+
 def length(p) -> int:
-    return sum(map(abs,p))
+    return sum(map(abs, p))
+
 
 def manhattan_distance(p1, p2) -> int:
     '''
@@ -52,7 +63,7 @@ def manhattan_distance(p1, p2) -> int:
     assert len(p1) == len(p2)
     ans = 0
     for i in range(len(p1)):
-        ans += abs(p1[i]-p2[i])
+        ans += abs(p1[i] - p2[i])
     return ans
 
 
@@ -95,11 +106,13 @@ def _adjacent_iter(p: tuple, width: int = 0, height: int = 0, adjacents=ALL_ADJA
             continue
         yield np
 
+
 def point_by_row(self, other):
     if self[1] == other[1]:
-        return self[0]-other[0]
+        return self[0] - other[0]
     else:
-        return self[1]-other[1]
+        return self[1] - other[1]
+
 
 def iter_from_to(start: tuple, dest: tuple):
     assert len(start) == len(dest)
