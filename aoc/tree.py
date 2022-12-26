@@ -34,6 +34,13 @@ class TreeNode:
     def __iter__(self):
         yield from self.nodes()
 
+    def __repr__(self):
+        l = str(self.left) if self.left else None
+        r = str(self.right) if self.right else None
+        if l or r:
+            return f"{self.val} [{self.left if self.left else ''}, {self.right if self.right else ''}]"
+        return str(self.val)
+
     def nodes(self, style=INORDER):
         if style == TreeNode.PREORDER:
             yield self.val
