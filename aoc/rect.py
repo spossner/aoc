@@ -24,6 +24,14 @@ class Rect:
                 boundary.extend(*p)
         return boundary
 
+    def translate(self, offset: Union[Point, tuple]):
+        self.x += offset[0]
+        self.y += offset[1]
+
+    def move_to(self, p: Union[Point, tuple]):
+        self.x = p[0]
+        self.y = p[1]
+
     def grow(self, i):
         """
         Grows this rectangle by i in all dimensions (x-i,y-i,w+2*i,h+2*i).
@@ -52,10 +60,14 @@ class Rect:
         :return: this rect itself for further concatenation
         """
         for a in args:
+            if type(a) == Rect:
+                self.extend((a.x, a.y), (a.x + a.w - 1, a.y), (a.x + a.w - 1, a.y + a.h - 1), (a.x, a.y + a.h - 1))
+                continue
+
             x, y = fetch(a, 2)
             if type(x) != int or type(y) != int:
                 for e in a:
-                    self.extend(e) # recursive process the elements of list/tuple of non ints
+                    self.extend(e)  # recursive process the elements of list/tuple of non ints
                 continue
 
             # empty rect -> contain exactly that point
@@ -95,7 +107,7 @@ class Rect:
 
         # handle empty rects
         if not self or not other:
-            return None
+            return Rect()
 
         # Left
         if other.x <= self.x < other.x + other.w:
@@ -103,7 +115,7 @@ class Rect:
         elif self.x <= other.x < self.x + self.w:
             x = other.x
         else:
-            return None
+            return Rect()
 
         # Right
         if self.x + self.w > other.x and self.x + self.w <= other.x + other.w:
@@ -111,7 +123,7 @@ class Rect:
         elif other.x + other.w > self.x and other.x + other.w <= self.x + self.w:
             w = other.x + other.w - x
         else:
-            return None
+            return Rect()
 
         # Top
         if self.y >= other.y and self.y < other.y + other.h:
@@ -119,7 +131,7 @@ class Rect:
         elif other.y >= self.y and other.y < self.y + self.h:
             y = other.y
         else:
-            return None
+            return Rect()
 
         # Bottom
         if self.y + self.h > other.y and self.y + self.h <= other.y + other.h:
@@ -127,7 +139,7 @@ class Rect:
         elif other.y + other.h > self.y and other.y + other.h <= self.y + self.h:
             h = other.y + other.h - y
         else:
-            return None
+            return Rect()
         return Rect(x, y, w, h)
 
     def __bool__(self):
