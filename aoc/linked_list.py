@@ -46,11 +46,12 @@ class ListNode:
             node = val
             node.prev_node = self
             node.next_node = self.next_node
+
+            if self.next_node:
+                self.next_node.prev_node = node
+            self.next_node = node
         else:
             node = ListNode(val, self, self.next_node)
-        if self.next_node:
-            self.next_node.prev_node = node
-        self.next_node = node
         return node
 
     def insert_before(self, val):
@@ -58,11 +59,11 @@ class ListNode:
             node = val
             node.prev_node = self.prev_node
             node.next_node = self
+            if self.prev_node:
+                self.prev_node.next_node = node
+            self.prev_node = node
         else:
             node = ListNode(val, self.prev_node, self)
-        if self.prev_node:
-            self.prev_node.next_node = node
-        self.prev_node = node
         return node
 
     @classmethod
