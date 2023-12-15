@@ -24,6 +24,7 @@ def fetch(iterable, n: int, fillvalue=None) -> [any]:
     fill = [fillvalue] * (n - len(iterable))
     return chain(iterable, fill)
 
+
 def batched(iterable, n):
     "Batch data into lists of length n. The last batch may be shorter."
     # batched('ABCDEFG', 3) --> ABC DEF G
@@ -32,3 +33,25 @@ def batched(iterable, n):
     it = iter(iterable)
     while (batch := list(islice(it, n))):
         yield batch
+
+
+# return overlap range for two range objects of same step or None if no overlap
+def range_intersect(r1, r2):
+    if r1 is None or r2 is None:
+        return None
+    if r1.step != r2.step:
+        raise ValueError('ranges must have same step')
+    return range(max(r1.start, r2.start), min(r1.stop, r2.stop), r1.step) or None
+
+
+# return a triple of (left, overlap, right) ranges for two given ranges r1 and r2 or None if there is no overlap
+# no existing ranges are None
+def split_range(r1, r2):
+    overlap = range_intersect(r1, r2)
+    if overlap == None:
+        return None
+
+    r_left = range(r1.start, overlap.start) or None
+    r_right = range(overlap.stop, r1.stop) or None
+
+    return (r_left, overlap, r_right)
