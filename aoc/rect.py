@@ -21,7 +21,7 @@ class Rect:
             if boundary is None:
                 boundary = Rect(*p, 1, 1)
             else:
-                boundary.extend(*p)
+                boundary.extend(p)
         return boundary
 
     def translate(self, offset: Union[Point, tuple]):
