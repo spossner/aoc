@@ -4,8 +4,8 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="aoc-lib", # Replace with your own username
-    version="1.1.6",
+    name="aoc-lib",  # Replace with your own username
+    version="1.1.7",
     author="Seppo",
     author_email="aoc@possner.de",
     description="Some helper functions for advent of code puzzles",
